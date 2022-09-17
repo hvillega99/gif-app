@@ -8,8 +8,19 @@ pipeline {
     }
 
     stage('log') {
-      steps {
-        sh 'ls -la'
+      parallel {
+        stage('log') {
+          steps {
+            sh 'ls -la'
+          }
+        }
+
+        stage('testing') {
+          steps {
+            sh 'npm i && npm run test'
+          }
+        }
+
       }
     }
 
